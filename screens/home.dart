@@ -8,20 +8,27 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   CovidDataBloc covidDataBloc = CovidDataBloc();
   @override
- void initState() {
-   
- covidDataBloc.fetchCovidData();
+  void initState() {
     super.initState();
   }
 
   @override
+  void didChangeDependencies() {
+    covidDataBloc.fetchCovidData();
+
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    covidDataBloc.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-
-    
-
     return Scaffold(
       appBar: AppBar(
         title: Text('COVID-19'),
@@ -35,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 return Card(
                   child: ListTile(
                     title: Text(snapshot.data[index].country),
-                     trailing:
+                    trailing:
                         Text(snapshot.data[index].totalConfirmed.toString()),
                   ),
                 );
